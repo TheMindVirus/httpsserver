@@ -1,18 +1,82 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>httpsserver template</title>
+    <title>RackSlashSpace</title>
     <script>
-window.onload = function() { alert("Hello from httpsserver!"); }
-button_click = function(element) { alert(element); }
+var container = null;
+var colour = null;
+var canvas = null;
+var ctx = null;
+var img = null;
+var zoom = null;
+
+var xmlhttp = null;
+
+window.onload = function()
+{
+    container = document.getElementById("container");
+    colour = document.getElementById("colour");
+    canvas = document.getElementsByTagName("canvas")[0];
+    ctx = canvas.getContext("2d");
+    canvas.width = 1000;
+    canvas.height = 1000;
+    canvas.style.width = canvas.width + "px";
+    canvas.style.height = canvas.height + "px";
+    canvas.onmousedown = canvas_onclick;
+    zoom = document.getElementById("zoom");
+    zoom.oninput = zoom_update;
+    setInterval("canvas_update();", 1000);
+}
+
+var canvas_onclick = function(event)
+{
+    var offset = canvas.getBoundingClientRect();
+    var X = parseInt((((event.x - offset.left) / canvas.clientWidth) * canvas.width) / zoom.value) - 1;
+    var Y = parseInt((((event.y - offset.top) / canvas.clientHeight) * canvas.height) / zoom.value) - 1;
+    var message = X + "x" + Y + "x" + colour.value;
+    document.title = message;
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function()
+    {
+        if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200))
+        {
+            //alert("response received");
+        }
+    }
+    xmlhttp.open("POST", "/", true);
+    xmlhttp.send(message);
+}
+
+var canvas_update = function()
+{
+    img = new Image();
+    img.onload = function()
+    {
+        canvas.width = canvas.width;
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+    img.src = "/canvas.png";
+}
+
+var zoom_update = function()
+{
+    canvas.style.transform = "scale(" + zoom.value + ")";
+    document.title = canvas.style.transform;
+}
     </script>
     <style>
 * { box-sizing: border-box; margin: auto; font-family: sans-serif; overflow: hidden; text-align: center; }
-body { background-image: url("./index.png"); backdrop-filter: blur(3px) brightness(1.2) saturate(2); position: fixed; width: 100%; height: 100%; }
-button { background: #00000000; color: white; text-shadow: 0 0 15px black; font-size: 100pt; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; }
+body { background: black; }
+canvas { background: white; position: relative; top: 0; left: 0; width: 1000px; height: 1000px; border: thin blue solid; transform: scale(16); transform-origin: center; image-rendering: pixelated; }
+#container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; overflow: scroll;  }
+#colour { position: fixed; top: 5px; left: 5px; }
+#zoom { position: relative; top: 5px; width: 80%; }
     </style>
   </head>
   <body>
-    <button onclick="button_click(this);">httpsserver template</button>
+    <div id="container"><canvas></canvas></div>
+    <input id="colour" type="color"></input>
+    <input id="zoom" type="range" min="1" max="16" step="1" value="16"></input>
   </body>
 </html>

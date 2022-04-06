@@ -3,8 +3,8 @@ Description=Python HTTPS Web Server
 
 [Service]
 Type=simple
-WorkingDirectory=/home/pi/httpsserver/
-ExecStart=python3 server.py
+WorkingDirectory=/home/pi/RackSlashSpace/
+ExecStart=/usr/bin/sudo /usr/bin/python3 server.py
 Restart=always
 
 [Install]
