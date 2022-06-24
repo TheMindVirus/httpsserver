@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+window.onload = () => { reconnect(); }
+
+var reconnect = () =>
+{
+    socket = new WebSocket("wss://localhost:8769");
+    socket.onopen = (event) => { setInterval(() => { socket.send("[PING]"); }, 100); }
+    socket.onmessage = (event) => { console.log(event.data); }
+    socket.onerror = (event) => { reconnect(); }
+}
+    </script>
+  </head>
+  <body style="background: black;">
+    <h1 style="color: purple; font-family: sans-serif;">See Console for more info</h1>
+  </body>
+</html>
