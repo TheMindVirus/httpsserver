@@ -1,12 +1,29 @@
-#!/usr/bin/python3
-import socket, ssl, http.server
+import socket, ssl, http.server, subprocess
 
-# https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs
-# sudo openssl req -newkey rsa:2048 -nodes -keyout domain.key -x509 -days 365 -out domain.crt
+WEBROOT = "./web"
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory = "web", **kwargs)
+        super().__init__(*args, directory = WEBROOT, **kwargs)
+
+    def do_PY(self):
+        program = str(self.path).encode()
+        headers = b"[TEST OUTPUT OF " + program + b"]\r\n"
+        message = b""
+        # Optionally Communicate with MicroPython/CircuitPython Device
+        command = "python " + str(WEBROOT) + program.decode()
+        try:
+            pipe = subprocess.run(command,
+                shell = True, check = True, capture_output = True)
+            message = pipe.stdout + pipe.stderr
+        except Exception as error:
+            message = str(error).encode()
+        data = headers + message
+        self.protocol_version = "HTTP/1.1"
+        self.send_response(200, "OK")
+        self.send_header("Content-Type", "text/html")
+        self.end_headers()
+        self.wfile.write(data)
 
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
