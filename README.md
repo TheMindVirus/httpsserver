@@ -1,4 +1,6 @@
 # httpsserver
-Python HTTPS Server built on SSL that keeps breaking
+### RSVP Server - HTTP TCP Bonjour mDNS v0.0.0.0.0.0.0.0.0.
+### RINSE Protocol - RINSE IS NOT SDP EDGE
+### TODO: Add JSON and REST Support
 
-![screenshot](https://github.com/themindvirus/httpsserver/blob/main/screenshot.png)
+![screenshot](/screenshot.png)
