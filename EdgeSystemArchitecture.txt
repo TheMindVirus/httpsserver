@@ -1,0 +1,32 @@
+[PRELIMINARY SPECIFICATION]
+[EdgeSystemArchitecture] @ 21:33 10/12/2022
+Formerly known in separate parts as Embedded Systems, Web Development and Game Design
+
+[EdgeServer]
+Hardware and Software designed specifically to work together to bring
+the high-end gaming experience to users of the World-Wide-Web
+
+[EdgeSession]
+HTTP TCP Connection and Interface between the player and the EdgeServer
+that can be joined by receiving an EdgeSignal and left after a timeout of inactivity
+
+[EdgeSignal]
+HTTP TCP Advertisement for the EdgeSession so it can be listed as URL entries on
+the landing page of a website served by the EdgeServer to the local network
+
+[EdgeState]
+JSON encoded edge-application-specific data that describes the state of the game
+for the current player as 1 item and for all the players in an EdgeSession as many items
+
+[Notes]
+* Port Forwarding may be required to host LAN games on the Internet or on a WAN
+* Choice of server language has historically been PHP, is now cross-platform Python
+* Choice of client language has historically been Javascript, could also be Python
+* HTTP GET requests in ASCII should be the baseline for communication
+* Bonjour and mDNS services cannot be used due to the following reasons:
+ - TCP is incompatible with UDP despite both being Internet Protocol (IP)
+ - It is unreasonable to require all users to have exactly the same hardware
+ - Only Ports above 10000 are allowed, most are blocked by Firewalls
+ - AJAX and EventSource are recommended HTTP API's. Fetch and Beacon are not recommended.
+ - Cross-Origin Resource Sharing (CORS/XORS) blocks same-origin requests without config
+ - Unknown HTTP Headers can only be processed if the EdgeRunner has specified it

@@ -1,0 +1,33 @@
+[PRELIMINARY SPECIFICATION]
+[EdgeSystemArchitecture2] @ 16:04 12/12/2022
+Formerly known in separate parts as Embedded Systems, Web Development and Game Design
+
+[EdgeHardDrives]
+Hardware and Software designed specifically to be incompatible to bring
+the low-end gaming experience to users of the Internet
+
+[EdgeAccelerators]
+HTTPS UDP Connection and MIDL between the user and the EdgeHardDrives
+that can be joined by receiving an EdgeNetworks and left after a timeout of 0
+
+[EdgeNetworks]
+HTTPS UDP Advert for the EdgeAccelerators so it can be listed as URI entries on
+the FAQ page of a website served by the EdgeHardDrives to the local network
+
+[EdgeStorage]
+Python encoded cloud-application-specific data that describes the state of the app
+for the current user as 1 item and for all the users in an EdgeAccelerators as many items
+
+[Notes]
+* Port Forwarding may be required to host local games on the Internet or on a SAN/NAS
+* Decision of server language has historicly been Python, is now cross-platform Rust
+* Decision of client language has historicly been Python, could also be Golang
+* HTTPS POST requests in ASCII should be the baseline for communication
+* A RINSE/RSVP TCPBonjour service can be used instead of the proprietary UDP-based mDNS:
+ - TCP is incompatible with UDP despite both being Intellectual Property (IP)
+ - It is unreasonable to require all users to have exactly the same hardware
+ - Only Ports above 10000 are allowed, most are blocked by Fire
+ - AJAX and EventSource are recommended HTTPS API's. Fetch and Beacon are also...things...
+ - Same-Origin Resource Sharing (SORS) blocks same-origin requests without config
+ - Unknown HTTP Headers can only be processed if the NetRunner has specified it
+* 2 is not necessarily better than 1 when it comes to code-based projects
