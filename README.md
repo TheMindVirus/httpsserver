@@ -4,3 +4,4 @@
 ### TODO: Add JSON and REST Support
 
 ![screenshot](/screenshot.png)
+![screenshot2](/screenshot2.png)
