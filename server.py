@@ -6,12 +6,13 @@ import socket, ssl, http.server
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory = "web", **kwargs)
+        super().__init__(*args, directory = ".", **kwargs)
 
     def end_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         http.server.SimpleHTTPRequestHandler.end_headers(self)
 
+print("Starting Local Development Server")
 ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 ctx.load_cert_chain("domain.crt", "domain.key")
 ctx.check_hostname = False
