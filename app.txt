@@ -1,0 +1,10 @@
+[INFO]: Multicast
+[INFO]: 1
+[INFO]: 1
+[INFO]: 0
+[INFO]: 0
+[INFO]: 224, 0, 1, 2, 127, 0, 0, 1, 
+[INFO]: 2, 1, 0, 224, 1, 0, 0, 127, 
+[INFO]: -1
+[INFO]: -1
+[INFO]: Cannot assign requested address
